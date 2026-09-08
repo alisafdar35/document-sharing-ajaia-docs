@@ -227,6 +227,11 @@ API and the site is redeployed.
 
 > `VITE_*` variables are inlined at build time, so changing `VITE_API_URL` requires a redeploy.
 
+> The install step is scoped to the client workspace
+> (`npm install --include=dev --workspace client --include-workspace-root`). The frontend build has
+> no use for the server's dependencies, and pulling in the Prisma CLI would make Vercel download
+> database engine binaries on every deploy.
+
 ---
 
 ## Design notes
