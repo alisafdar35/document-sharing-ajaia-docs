@@ -1,0 +1,13 @@
+Ajaia Docs — walkthrough video
+
+[PENDING] Paste the unlisted Loom or YouTube link here before submitting.
+
+Suggested 3-5 minute outline:
+  0:00  What it is, and the scenario it is built for
+  0:30  Dashboard: My documents vs Shared with me; create a document
+  1:00  Editing: formatting toolbar, autosave indicator, rename, reopen
+  2:00  Import a .md file and show the converted structure
+  2:30  Share with Sarah, switch users, edit as her, show rename is blocked
+  3:30  Revoke access and show it disappear
+  4:00  Key decisions: permissions in one place, autosave design, what was cut
+  4:30  How AI supported the work (see AI_WORKFLOW.md)

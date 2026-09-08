@@ -92,16 +92,21 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
-            <ImportButton
-              userId={activeUser.id}
-              onImported={(document) => navigate(`/documents/${document.id}`)}
-              onError={setError}
-            />
-            <button type="button" className="btn-primary" onClick={handleCreate} disabled={creating}>
-              {creating ? <Spinner /> : <FilePlus2 className="h-4 w-4" aria-hidden="true" />}
-              New document
-            </button>
+          <div className="flex flex-col items-start gap-1.5 sm:items-end">
+            <div className="flex items-center gap-2">
+              <ImportButton
+                userId={activeUser.id}
+                onImported={(document) => navigate(`/documents/${document.id}`)}
+                onError={setError}
+              />
+              <button type="button" className="btn-primary" onClick={handleCreate} disabled={creating}>
+                {creating ? <Spinner /> : <FilePlus2 className="h-4 w-4" aria-hidden="true" />}
+                New document
+              </button>
+            </div>
+            {/* The supported formats are stated up front, not only in the error
+                you get after picking the wrong file. */}
+            <p className="text-xs text-slate-400">Import supports .txt and .md files, up to 1 MB.</p>
           </div>
         </div>
 

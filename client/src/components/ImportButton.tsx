@@ -66,6 +66,7 @@ export function ImportButton({ userId, onImported, onError }: ImportButtonProps)
         className="btn-secondary"
         onClick={() => inputRef.current?.click()}
         disabled={busy}
+        title="Import a .txt or .md file (up to 1 MB) as a new document"
       >
         {busy ? <Spinner /> : <Upload className="h-4 w-4" aria-hidden="true" />}
         Import
