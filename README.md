@@ -204,6 +204,10 @@ No other change is needed — the Prisma provider switches to PostgreSQL from th
 
 3. Deploy, then go back and make sure Render's `CLIENT_URL` matches the Vercel domain.
 
+The frontend can be deployed before the API exists — it will render a clear "Ajaia Docs could not
+start" screen naming the URL it tried, and start working as soon as `VITE_API_URL` points at a live
+API and the site is redeployed.
+
 > `VITE_*` variables are inlined at build time, so changing `VITE_API_URL` requires a redeploy.
 
 ---

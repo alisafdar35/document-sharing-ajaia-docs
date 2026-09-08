@@ -57,7 +57,9 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   } catch (error) {
     // Re-throw aborts untouched so callers can ignore them.
     if (error instanceof DOMException && error.name === 'AbortError') throw error;
-    throw new ApiError(0, 'Cannot reach the server. Is the API running on port 4000?');
+    // Name the URL we actually tried: locally that means "start the API",
+    // once deployed it usually means VITE_API_URL is unset or wrong.
+    throw new ApiError(0, `Cannot reach the API at ${API_URL}. Check that it is running and that VITE_API_URL points at it.`);
   }
 
   let payload: unknown = null;
