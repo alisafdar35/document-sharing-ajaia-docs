@@ -11,7 +11,7 @@ services:
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npm install && npm run build --workspace server
+    buildCommand: npm install --include=dev && npm run build --workspace server
     # start:prod applies the Prisma schema and seeds the demo users (both are
     # idempotent) before the API starts listening.
     startCommand: npm run start:prod --workspace server
@@ -19,8 +19,10 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
-      # The Prisma CLI and tsx live in devDependencies and are needed by the
-      # build and by start:prod, so they must survive npm install.
+      # Render sets NODE_ENV=production, which makes npm skip devDependencies.
+      # tsc, the @types packages, the Prisma CLI and tsx are all needed by the
+      # build or by start:prod, so they are declared as real dependencies in
+      # server/package.json. This is belt-and-braces for anything added later.
       - key: NPM_CONFIG_INCLUDE
         value: dev
       - key: DATABASE_URL

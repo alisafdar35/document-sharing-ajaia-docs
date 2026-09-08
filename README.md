@@ -176,6 +176,23 @@ The start command applies the Prisma schema and seeds the demo users on boot —
 so the database is usable as soon as the service is live. Free Render services sleep when idle, so
 the first request after a pause can take ~30 seconds.
 
+If you created the web service by hand instead of from the blueprint, use these settings:
+
+| Setting        | Value                                              |
+| -------------- | -------------------------------------------------- |
+| Root Directory | *(leave blank — the repo root)*                    |
+| Build Command  | `npm install --include=dev && npm run build --workspace server` |
+| Start Command  | `npm run start:prod --workspace server`            |
+| Health Check   | `/api/health`                                      |
+| Env            | `DATABASE_URL`, `CLIENT_URL`, `NODE_VERSION=22`    |
+
+> **Why the build tools are in `dependencies`.** Render sets `NODE_ENV=production`, which makes
+> `npm install` skip `devDependencies`. Because the host compiles the TypeScript itself, `tsc`, the
+> `@types/*` packages, the Prisma CLI and `tsx` are all needed there — so they are declared as real
+> dependencies in `server/package.json`. Only the test-only packages (Vitest, Supertest) remain in
+> `devDependencies`. Without this the build fails with `tsc: command not found` or a wall of
+> `TS7016: Could not find a declaration file for module 'express'` errors.
+
 <details>
 <summary>Using Supabase for the database instead</summary>
 
