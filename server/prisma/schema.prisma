@@ -1,0 +1,58 @@
+// ---------------------------------------------------------------------------
+// Ajaia Docs - Prisma schema
+//
+// The datasource provider below is kept in sync with DATABASE_URL by
+// `scripts/prepare-prisma.mjs`, which runs before every dev/build/test/setup
+// command. A `file:` URL selects SQLite (local development), a
+// `postgres(ql)://` URL selects PostgreSQL (production / Supabase).
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  documents    Document[]      @relation("DocumentOwner")
+  sharedWithMe DocumentShare[]
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  title     String
+  /// TipTap document stored as a JSON string (SQLite has no native JSON type,
+  /// so we serialise on write and parse on read for both providers).
+  content   String   @default("")
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner  User            @relation("DocumentOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  shares DocumentShare[]
+
+  @@index([ownerId])
+  @@index([updatedAt])
+}
+
+model DocumentShare {
+  id         String   @id @default(cuid())
+  documentId String
+  userId     String
+  permission String   @default("editor")
+  createdAt  DateTime @default(now())
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, userId])
+  @@index([userId])
+}

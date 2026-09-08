@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# Render blueprint for the Ajaia Docs API + PostgreSQL database.
+#
+# Deploy with: Render Dashboard -> New -> Blueprint -> pick this repository.
+# After the first deploy, set CLIENT_URL to your Vercel domain so CORS allows
+# the frontend through.
+# ---------------------------------------------------------------------------
+services:
+  - type: web
+    name: ajaia-docs-api
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build --workspace server
+    # start:prod applies the Prisma schema and seeds the demo users (both are
+    # idempotent) before the API starts listening.
+    startCommand: npm run start:prod --workspace server
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # The Prisma CLI and tsx live in devDependencies and are needed by the
+      # build and by start:prod, so they must survive npm install.
+      - key: NPM_CONFIG_INCLUDE
+        value: dev
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ajaia-docs-db
+          property: connectionString
+      # Set to the deployed frontend origin, e.g. https://ajaia-docs.vercel.app
+      # Comma-separate to allow more than one origin.
+      - key: CLIENT_URL
+        sync: false
+
+databases:
+  - name: ajaia-docs-db
+    plan: free
+    databaseName: ajaia_docs
+    user: ajaia

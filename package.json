@@ -1,0 +1,27 @@
+{
+  "name": "ajaia-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ajaia Docs - a lightweight collaborative document editor",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "setup": "npm run --workspace server setup",
+    "dev": "concurrently -n server,client -c cyan,magenta \"npm run --workspace server dev\" \"npm run --workspace client dev\"",
+    "build": "npm run --workspace server build && npm run --workspace client build",
+    "start": "npm run --workspace server start",
+    "test": "npm run --workspace server test",
+    "lint": "npm run --workspace client build",
+    "db:push": "npm run --workspace server db:push",
+    "db:seed": "npm run --workspace server db:seed",
+    "db:studio": "npm run --workspace server db:studio"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=18.18"
+  }
+}

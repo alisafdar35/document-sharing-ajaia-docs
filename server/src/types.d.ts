@@ -1,0 +1,12 @@
+import type { User } from '@prisma/client';
+
+declare global {
+  namespace Express {
+    interface Request {
+      /** Populated by the requireUser middleware from the x-user-id header. */
+      user: User;
+    }
+  }
+}
+
+export {};
