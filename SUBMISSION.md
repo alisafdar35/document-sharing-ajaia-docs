@@ -5,15 +5,22 @@
 an internal productivity tool for teams working on shared documents — with depth in a few areas
 rather than shallow coverage of everything Google Docs does.
 
-> **Fill in before sending:** the two links marked **[PENDING]** below, and delete this line.
+> **Fill in before sending:** the walkthrough video link marked **[PENDING]** below, then delete
+> this line.
 
 ## Links
 
 | What | Where |
 | --- | --- |
-| Live product | **[PENDING — deployment in progress]** |
+| **Live product** | **https://ajaia-docs-client-rho.vercel.app** |
+| API | https://ajaia-docs-dngb.onrender.com/api/health |
 | Source code | https://github.com/alisafdar35/ajaia-docs *(private — invite reviewers, or use the copy in this folder)* |
 | Walkthrough video | **[PENDING]** — also in `VIDEO_URL.txt` |
+
+> **Please note:** the API runs on Render's free tier, which sleeps after about 15 minutes of
+> inactivity. The first page load after an idle period can take 30–60 seconds while it wakes up, and
+> the app will briefly show a "could not start" message until it responds. A refresh after that is
+> immediate. Opening the API link above first will warm it up.
 
 ## What is in this folder
 
@@ -24,6 +31,7 @@ rather than shallow coverage of everything Google Docs does.
 | `AI_WORKFLOW.md` | Which AI tools I used, what I changed or rejected, how I verified correctness |
 | `SUBMISSION.md` | This file |
 | `VIDEO_URL.txt` | Walkthrough video link |
+| `VIDEO_SCRIPT.md` | The script used for the walkthrough recording |
 | `client/` | React + TypeScript + Vite frontend (TipTap editor) |
 | `server/` | Express + Prisma API, including the test suite |
 
@@ -73,10 +81,8 @@ Open <http://localhost:5173>. Tests: `npm test` (60 tests).
 
 ## What is incomplete
 
-- **Deployment.** The frontend and API are configured and both build cleanly from a clean clone
-  (`vercel.json`, `render.yaml` are committed), but the hosted URL is not live yet. Two host-specific
-  build failures were found and fixed; see `AI_WORKFLOW.md`. **This is the one deliverable not
-  finished.** Running locally takes about two minutes and exercises every feature.
+- **Cold starts.** The API is on Render's free tier and sleeps when idle — see the note above. This
+  is a hosting-plan limitation, not an application one.
 - **No real authentication.** User identity is an `x-user-id` header against seeded accounts. The
   brief permits this; it is not secure and is not meant to be.
 - **No concurrent editing.** Two people in the same document at the same time will overwrite each

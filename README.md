@@ -1,5 +1,9 @@
 # Ajaia Docs
 
+**Live demo: https://ajaia-docs-client-rho.vercel.app** — no login required; use the switcher in the
+top-right corner to change users. The API is on Render's free tier, so the first load after an idle
+period can take 30–60 seconds to wake up.
+
 A lightweight collaborative document editor — create rich-text documents, share them with
 teammates, and edit together. Built as a TypeScript monorepo: a React + TipTap frontend and an
 Express + Prisma API.
