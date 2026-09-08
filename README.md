@@ -209,10 +209,18 @@ No other change is needed — the Prisma provider switches to PostgreSQL from th
 
 ### 3. Frontend on Vercel
 
-1. Vercel → **Add New** → **Project** → import the repository. `vercel.json` at the repository root
-   already sets the build command (`npm run build --workspace client`), the output directory
-   (`client/dist`) and the SPA rewrite that makes `/documents/:id` deep links work — leave the
-   **Root Directory** as the repository root.
+1. Vercel → **Add New** → **Project** → import the repository. Either Root Directory setting works,
+   because Vercel reads `vercel.json` from whichever directory you point it at and both are
+   committed:
+
+   | Root Directory | Config used | Build |
+   | --- | --- | --- |
+   | *blank* (repo root) | `vercel.json` | `npm run build --workspace client` → `client/dist` |
+   | `client` | `client/vercel.json` | auto-detected Vite → `dist` |
+
+   Both apply the SPA rewrite that makes `/documents/:id` deep links survive a refresh. Without it
+   Vercel returns a 404 for any URL that is not the index — so if you change the Root Directory,
+   make sure the matching `vercel.json` is the one being read.
 2. Add an environment variable:
 
    | Name           | Value                                            |
